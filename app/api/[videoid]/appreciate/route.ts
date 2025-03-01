@@ -1,12 +1,12 @@
 import connectToDatabase from "@/lib/db";
-import mongoose from "mongoose";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "../../auth/[...nextauth]/options";
 import UserModel from "@/models/User";
 import VideoModel from "@/models/Video";
 
-export async function POST(req: NextRequest, { params }: { params: { videoid: string } }) {
+export async function POST(req: NextRequest, props: { params: Promise<{ videoid: string }> }) {
+    const params = await props.params;
 
     await connectToDatabase();
     try {
@@ -87,10 +87,12 @@ export async function POST(req: NextRequest, { params }: { params: { videoid: st
 
         // add user to appreciatedBy array of video and increase kudos count by 1
 
-        existingVideo.appreciatedBy.push(existingUser._id);
         existingVideo.kudosCount += 1;
+        existingVideo.appreciatedBy.push(existingUser._id);
+        existingUser.kudos -= 1;
 
         await existingVideo.save();
+        await existingUser.save();
 
         return NextResponse.json({
             success: true,

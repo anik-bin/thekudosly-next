@@ -91,8 +91,7 @@ export async function POST(req: NextRequest, props: { params: Promise<{ videoid:
         existingVideo.appreciatedBy.push(existingUser._id);
         existingUser.kudos -= 1;
 
-        await existingVideo.save();
-        await existingUser.save();
+        await Promise.all([existingVideo.save(), existingUser.save()]);
 
         return NextResponse.json({
             success: true,

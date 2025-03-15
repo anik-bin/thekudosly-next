@@ -1,8 +1,6 @@
 import VideoModel from "@/models/Video";
 import UserModel from "@/models/User";
 import { NextRequest, NextResponse } from "next/server";
-import { extractYoutubeVideoID } from "@/lib/extractYoutubeVideoID";
-import axios from "axios";
 import connectToDatabase from "@/lib/db";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/options";
@@ -11,7 +9,7 @@ export async function POST(req: NextRequest) {
     await connectToDatabase();
 
     try {
-        const { videoUrl } = await req.json();
+        const { videoUrl, videoId, thumbnail, title } = await req.json();
 
         const session = await getServerSession(authOptions);
 
@@ -48,21 +46,9 @@ export async function POST(req: NextRequest) {
                 status: 400
             })
         }
-        const extractedVideoId = extractYoutubeVideoID(videoUrl);
-
-        if (!extractedVideoId) {
-            return NextResponse.json({
-                success: false,
-                message: "Invalid video URL"
-            },
-                { status: 400 }
-            );
-        }
-
-        // check if video already exists in database
 
         const existingVideo = await VideoModel.findOne({
-            videoId: extractedVideoId
+            videoId: videoId,
         });
 
         if (existingVideo) {
@@ -76,41 +62,15 @@ export async function POST(req: NextRequest) {
             )
         }
 
-        // if everything is ok then fetch the video details from YouTube API
-
-        const response = await axios.get(`https://www.googleapis.com/youtube/v3/videos`, {
-            params: {
-                part: "snippet",
-                id: extractedVideoId,
-                key: process.env.YOUTUBE_API_KEY
-            }
-        })
-
-        if (response.data.items.length === 0) {
-            return NextResponse.json({
-                success: false,
-                message: "Video not found"
-            },
-                {
-                    status: 404
-                }
-            )
-        }
-
-        const videoDetailsReceived = response.data.items[0].snippet;
-        const videoThumbnail = videoDetailsReceived.thumbnails.maxres?.url || videoDetailsReceived.thumbnails.default.url;
-
-        // save the video to the database
 
         existingUser.kudos -= 1;
 
         const newVideo = await VideoModel.create({
-            videoUrl: videoUrl,
-            videoId: extractedVideoId,
-            title: videoDetailsReceived.title,
-            thumbnail: videoThumbnail,
+            videoUrl,
+            videoId,
+            thumbnail,
+            title,
             submittedBy: existingUser._id
-
         });
 
         await existingUser.save();

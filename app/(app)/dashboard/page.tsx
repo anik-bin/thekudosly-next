@@ -2,10 +2,13 @@
 import { useSession, signOut } from "next-auth/react";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
+import Navbar from "@/components/Navbar";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import Sidebar from "@/components/Sidebar";
 
 export default function Dashboard() {
-    const {data: session, status} = useSession();
+    const { data: session, status } = useSession();
     const router = useRouter();
 
     useEffect(() => {
@@ -17,12 +20,30 @@ export default function Dashboard() {
     if (status === "loading") return <p>Loading...</p>;
 
     return (
-        <div className="flex flex-col gap-4 items-center justify-center h-screen dark:bg-gray-800">
-            <h1>Dashboard</h1>
-            <p>Welcome, {session?.user.username}</p>
-            <Image src={session?.user.image || "/vercel.svg"} alt="Profile" width={100} height={100} />
-            <p>{session?.user.kudos}</p>
-            <button onClick={()=> signOut()}>Logout</button>
+        // <>
+        // <Navbar />
+        // <div className="flex flex-col gap-4 items-center justify-center h-screen dark:bg-gray-800">
+        //     <h1>Dashboard</h1>
+        //     <p>Welcome, {session?.user.username}</p>
+        //     <p>Kudos: {session?.user.kudos}</p>
+        //     <Button onClick={()=> signOut()} variant="default">Logout</Button>
+        // </div>
+        // </>
+
+        <div className="h-screen grid grid-rows-[auto,1fr] grid-cols-1">
+            {/* Navbar */}
+            <Navbar />
+
+            {/* Sidebar + Main Content */}
+            <div className="grid grid-cols-[250px,1fr] h-full">
+                {/* Sidebar */}
+                <Sidebar />
+
+                {/* Main Content */}
+                <main className="p-6">
+                    <h1>Hello</h1>
+                </main>
+            </div>
         </div>
     )
 

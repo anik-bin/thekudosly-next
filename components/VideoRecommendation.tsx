@@ -18,6 +18,7 @@ interface VideoDetails {
     thumbnail: string;
     channelName: string;
     videoUrl: string;
+    duration: string;
 }
 
 export default function VideoRecommendation() {
@@ -34,9 +35,9 @@ export default function VideoRecommendation() {
         setLoading(true);
         try {
             const response = await axios.post("/api/preview", { videoUrl: url });
-            const { videoId, title, thumbnail, channelName } = response.data;
+            const { videoId, title, thumbnail, channelName, duration } = response.data;
 
-            setVideoDetails({ videoId, title, thumbnail, channelName, videoUrl: url });
+            setVideoDetails({ videoId, title, thumbnail, channelName, videoUrl: url, duration});
 
             toast.success("Preview created", {
                 description: "Check the video details below.",
@@ -57,7 +58,12 @@ export default function VideoRecommendation() {
     const onSubmit = async (data: z.infer<typeof youtubeVideoLinkVerificationSchema>) => {
         setLoading(true);
         try {
-            const response = await axios.post<ApiResponse>(`/api/recommend`, data);
+            const response = await axios.post<ApiResponse>("/api/recommend", {
+                videoUrl: videoDetails?.videoUrl,
+                videoId: videoDetails?.videoId,
+                thumbnail: videoDetails?.thumbnail,
+                title: videoDetails?.title,
+            });
 
             toast.success("Success", {
                 description: response.data.message,
@@ -89,9 +95,9 @@ export default function VideoRecommendation() {
                         value={url}
                         onChange={(e) => setUrl(e.target.value)}
                         className="w-1/2"
-                        disabled={videoDetails !== null}
+                        disabled={loading}
                     />
-                    <Button onClick={handlePreview} disabled={videoDetails !== null} className="w-40 bg-white text-black hover:bg-slate-100">
+                    <Button onClick={handlePreview} disabled={loading} className="w-40 bg-white text-black hover:bg-slate-100">
                         {loading ? "Loading..." : "Preview"}
                     </Button>
                 </div>
@@ -105,6 +111,7 @@ export default function VideoRecommendation() {
                                 thumbnail={videoDetails.thumbnail}
                                 title={videoDetails.title}
                                 channelName={videoDetails.channelName}
+                                duration={videoDetails.duration}
                             />
                         </div>
                         <Button

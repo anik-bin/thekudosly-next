@@ -6,7 +6,7 @@ export interface User extends Document {
     email: string;
     profilePicture?: string;
     kudos: number;
-    lastKudosRefresh: Date;
+    lastKudosRefresh: number;
     createdAt?: Date;
     updatedAt?: Date;
 }
@@ -32,7 +32,7 @@ const userSchema: Schema<User> = new Schema(
             min: 0,
         },
         lastKudosRefresh: {
-            type: Date,
+            type: Number,
             default: Date.now,
         },
     },

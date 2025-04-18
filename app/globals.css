@@ -76,3 +76,23 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .aspect-w-16 {
+    position: relative;
+  }
+
+  .aspect-h-9 {
+    padding-bottom: 56.25%;
+  }
+
+  .aspect-w-16>* {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+}

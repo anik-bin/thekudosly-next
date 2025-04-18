@@ -66,6 +66,7 @@ export async function POST(req: NextRequest) {
         const videoThumbnail = videoDetailsReceived.thumbnails.maxres?.url || videoDetailsReceived.thumbnails.default.url;
         const videoContentsReceived = response.data.items[0].contentDetails;
         const videoDuration = formatDuration(videoContentsReceived.duration);
+        const videoDescription = videoDetailsReceived.description || "";
 
         return NextResponse.json({
             success: true,
@@ -75,6 +76,7 @@ export async function POST(req: NextRequest) {
             title: videoDetailsReceived.title,
             channelName: videoDetailsReceived.channelTitle,
             duration: videoDuration,
+            description: videoDescription,
         }, {
             status: 200
         })

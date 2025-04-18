@@ -6,6 +6,8 @@ export interface Video extends Document {
     thumbnail: string;
     videoUrl: string;
     videoId: string;
+    channelName: string;
+    description: string;
     submittedBy: mongoose.Types.ObjectId;
     kudosCount: number;
     appreciatedBy: mongoose.Types.ObjectId[];
@@ -25,13 +27,21 @@ const videoSchema: Schema<Video> = new Schema(
             type: String,
             unique: true,
             required: [true, "Video URL is required"],
-            match: /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+/, // Ensures it's a valid YouTube link
+            match: /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+/,
         },
         videoId: {
             type: String,
             required: [true, "Video ID is required"],
             unique: true,
-            index: true, // Add index for faster queries
+            index: true,
+        },
+        channelName: {
+            type: String,
+            required: [true, "Channel name is required"],
+        },
+        description: {
+            type: String,
+            default: "",
         },
         submittedBy: {
             type: Schema.Types.ObjectId,

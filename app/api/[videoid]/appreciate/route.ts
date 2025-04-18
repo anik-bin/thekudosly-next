@@ -85,6 +85,22 @@ export async function POST(req: NextRequest, props: { params: Promise<{ videoid:
             )
         }
 
+        // Check if user has already given kudos to this video
+        const hasAlreadyGivenKudos = existingVideo.appreciatedBy.some(
+            (userId) => userId.toString() === existingUser._id.toString()
+        );
+
+        if (hasAlreadyGivenKudos) {
+            return NextResponse.json({
+                success: false,
+                message: "You have already given kudos to this video"
+            },
+                {
+                    status: 400
+                }
+            )
+        }
+
         // add user to appreciatedBy array of video and increase kudos count by 1
 
         existingVideo.kudosCount += 1;

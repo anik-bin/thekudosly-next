@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Loader from "./Loader";
 import VideoCard from "./VideoCard";
+import { useRouter } from "next/navigation";
 
 
 interface VideoDetails {
@@ -19,9 +20,12 @@ interface VideoDetails {
     channelName: string;
     videoUrl: string;
     duration: string;
+    description: string;
 }
 
 export default function VideoRecommendation() {
+
+    const router = useRouter();
     const [url, setUrl] = useState("");
     const [videoDetails, setVideoDetails] = useState<VideoDetails | null>(null);
     const [loading, setLoading] = useState(false);
@@ -35,9 +39,9 @@ export default function VideoRecommendation() {
         setLoading(true);
         try {
             const response = await axios.post("/api/preview", { videoUrl: url });
-            const { videoId, title, thumbnail, channelName, duration } = response.data;
+            const { videoId, title, thumbnail, channelName, duration, description } = response.data;
 
-            setVideoDetails({ videoId, title, thumbnail, channelName, videoUrl: url, duration});
+            setVideoDetails({ videoId, title, thumbnail, channelName, videoUrl: url, duration, description});
 
             toast.success("Preview created", {
                 description: "Check the video details below.",
@@ -63,6 +67,8 @@ export default function VideoRecommendation() {
                 videoId: videoDetails?.videoId,
                 thumbnail: videoDetails?.thumbnail,
                 title: videoDetails?.title,
+                channelName: videoDetails?.channelName,
+                description: videoDetails?.description,
             });
 
             toast.success("Success", {
@@ -71,6 +77,8 @@ export default function VideoRecommendation() {
 
             setUrl("");
             setVideoDetails(null);
+
+            router.push(`/video/yt/${videoDetails?.videoId}`);
         } catch (error) {
             const axiosError = error as AxiosError<ApiResponse>;
             const errorMessage = axiosError.response?.data.message;

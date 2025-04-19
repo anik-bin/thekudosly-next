@@ -49,7 +49,7 @@ const Sidebar = () => {
     return (
         <aside className="p-4 space-y-6">
             {/* Kudos Counter */}
-            <div className="p-4 rounded-lg shadow-md text-center bg-gray-800">
+            <div className="p-4 rounded-lg shadow-md text-center bg-[#1B1B1A]">
                 <h2 className="text-lg font-semibold">Kudos: {session?.user.kudos}</h2>
                 
                 {session?.user.lastKudosRefresh ? (
@@ -68,14 +68,14 @@ const Sidebar = () => {
 
             {/* Navigation Links */}
             <nav className="space-y-3">
-                <Link href="/recommend" className="block p-2 rounded-lg shadow bg-[#1B1B1A] hover:bg-[#41413e]">
-                    Recommend
+                <Link href="/recommend" className="flex gap-2 p-2 rounded-lg shadow bg-[#1B1B1A] hover:bg-[#41413e]">
+                    🎬 Recommend
                 </Link>
                 <Link href="/dashboard" className="block p-2 rounded-lg shadow bg-[#1B1B1A] hover:bg-[#41413e]">
-                    Trending
+                    ⚡️ Trending
                 </Link>
                 <Link href="/contact" className="block p-2 rounded-lg shadow bg-[#1B1B1A] hover:bg-[#41413e]">
-                    Contact Us
+                    📬 Contact Us
                 </Link>
                 <Button variant="destructive" className="w-full" onClick={() => signOut()}>
                     Logout

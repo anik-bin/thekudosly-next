@@ -67,6 +67,7 @@ export default function VideoRecommendation() {
                 videoId: videoDetails?.videoId,
                 thumbnail: videoDetails?.thumbnail,
                 title: videoDetails?.title,
+                duration: videoDetails?.duration,
                 channelName: videoDetails?.channelName,
                 description: videoDetails?.description,
             });
@@ -120,6 +121,7 @@ export default function VideoRecommendation() {
                                 title={videoDetails.title}
                                 channelName={videoDetails.channelName}
                                 duration={videoDetails.duration}
+                                videoId={videoDetails.videoId}
                             />
                         </div>
                         <Button

@@ -8,6 +8,7 @@ declare module "next-auth" {
         username?: string;
         kudos?: number;
         lastKudosRefresh?: number;
+        about?: string;
     }
     
     interface Session {
@@ -16,6 +17,7 @@ declare module "next-auth" {
             username?: string;
             kudos?: number;
             lastKudosRefresh?: number;
+            about?: string;
         } & DefaultSession["user"];
     }
 }
@@ -26,5 +28,6 @@ declare module "next-auth/jwt" {
     username?: string;
     kudos?: number;
     lastKudosRefresh?: number;
+    about?: string;
   }
 }

@@ -3,8 +3,6 @@ import GoogleProvider from "next-auth/providers/google";
 import connectToDatabase from "@/lib/db";
 import UserModel from "@/models/User";
 
-// new line
-
 const KUDOS_REFRESH_INTERVAL = 24 * 60 * 60 * 1000;
 
 
@@ -30,13 +28,15 @@ export const authOptions: NextAuthOptions = {
                         kudos: 3,
                         lastKudosRefresh: Date.now(),
                         username: "",
+                        about: "",
                     })
                     await newUser.save();
 
                     token._id = newUser._id.toString();
                     token.username = newUser.username;
                     token.kudos = newUser.kudos;
-                    token.lastKudosRefresh = newUser.lastKudosRefresh; // new line added
+                    token.lastKudosRefresh = newUser.lastKudosRefresh;
+                    token.about = newUser.about;
                 } else {
 
                     // kudos refresh logic
@@ -51,7 +51,8 @@ export const authOptions: NextAuthOptions = {
                     token._id = dbUser._id.toString();
                     token.username = dbUser.username;
                     token.kudos = dbUser.kudos;
-                    token.lastKudosRefresh = dbUser.lastKudosRefresh; // new line added
+                    token.lastKudosRefresh = dbUser.lastKudosRefresh;
+                    token.about = dbUser.about;
                 }
             }
 
@@ -72,7 +73,8 @@ export const authOptions: NextAuthOptions = {
                     token._id = dbUser._id.toString();
                     token.username = dbUser.username;
                     token.kudos = dbUser.kudos;
-                    token.lastKudosRefresh = dbUser.lastKudosRefresh; // new line added
+                    token.lastKudosRefresh = dbUser.lastKudosRefresh;
+                    token.about = dbUser.about;
                 }
             }
 
@@ -84,7 +86,8 @@ export const authOptions: NextAuthOptions = {
                 session.user._id = token._id;
                 session.user.username = token.username;
                 session.user.kudos = token.kudos;
-                session.user.lastKudosRefresh = token.lastKudosRefresh; // new line added
+                session.user.lastKudosRefresh = token.lastKudosRefresh;
+                session.user.about = token.about;
             }
 
             return session;

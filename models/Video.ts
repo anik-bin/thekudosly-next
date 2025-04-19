@@ -8,6 +8,7 @@ export interface Video extends Document {
     videoId: string;
     channelName: string;
     description: string;
+    duration: string;
     submittedBy: mongoose.Types.ObjectId;
     kudosCount: number;
     appreciatedBy: mongoose.Types.ObjectId[];
@@ -42,6 +43,10 @@ const videoSchema: Schema<Video> = new Schema(
         description: {
             type: String,
             default: "",
+        },
+        duration: {
+            type: String,
+            default: "0:00",
         },
         submittedBy: {
             type: Schema.Types.ObjectId,

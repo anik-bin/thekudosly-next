@@ -5,12 +5,23 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/options";
 
 function formatDuration(duration: string) {
-    const match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
-    const hours = match?.[1] ? match[1].replace("H", "") : "00";
-    const minutes = match?.[2] ? match[2].replace("M", "") : "00";
-    const seconds = match?.[3] ? match[3].replace("S", "") : "00";
-    return `${hours !== "00" ? hours + ":" : ""}${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+    const match = duration.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
+
+    if (!match) return "00:00"; // Default if no match is found
+
+    // Extract hours, minutes, seconds, defaulting to 0
+    const hours = match[1] ? parseInt(match[1]) : 0;
+    const minutes = match[2] ? parseInt(match[2]) : 0;
+    const seconds = match[3] ? parseInt(match[3]) : 0;
+
+    // Format based on presence of hours
+    if (hours > 0) {
+        return `${hours}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    } else {
+        return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    }
 }
+
 
 export async function POST(req: NextRequest) {
     try {

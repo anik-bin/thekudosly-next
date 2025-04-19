@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
     await connectToDatabase();
 
     try {
-        const { videoUrl, videoId, thumbnail, title, channelName, description } = await req.json();
+        const { videoUrl, videoId, thumbnail, title, channelName, description, duration } = await req.json();
 
         const session = await getServerSession(authOptions);
 
@@ -72,6 +72,7 @@ export async function POST(req: NextRequest) {
             title,
             channelName,
             description,
+            duration,
             submittedBy: existingUser._id
         });
 

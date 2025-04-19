@@ -20,7 +20,7 @@ export default function NavbarPreview() {
             {/* Right Section: Auth Buttons or Profile */}
             <div>
                 {session ? (
-                    <Link href="/profile">
+                    <Link href={`/profile/${session.user.username}`}>
                         <div className="flex gap-2 items-center bg-[#1B1B1A] p-2 hover:bg-[#41413e] rounded-sm">
                             <Avatar className="w-9 h-9 cursor-pointer">
                                 <AvatarImage src={session.user.image || "/default-avatar.png"} />

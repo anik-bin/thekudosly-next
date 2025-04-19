@@ -57,7 +57,7 @@ const login = () => {
                             placeholder="Enter your username"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
-                            className="px-4 py-2 rounded border"
+                            className="px-4 py-2 rounded border text-black"
                             required
                             minLength={3}
                         />

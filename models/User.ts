@@ -5,6 +5,7 @@ export interface User extends Document {
     username?: string;
     email: string;
     profilePicture?: string;
+    about?: string;
     kudos: number;
     lastKudosRefresh: number;
     createdAt?: Date;
@@ -34,6 +35,10 @@ const userSchema: Schema<User> = new Schema(
         lastKudosRefresh: {
             type: Number,
             default: Date.now,
+        },
+        about: {
+            type: String,
+            default: "",
         },
     },
     {

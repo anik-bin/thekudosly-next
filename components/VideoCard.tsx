@@ -13,7 +13,7 @@ interface VideoCardProps {
 
 const VideoCard = ({ title, thumbnail, channelName, duration, videoId, kudosCount }: VideoCardProps) => {
   return (
-    <div className="block rounded-lg shadow-md overflow-hidden w-80 mt-6 transition-transform hover:scale-105">
+    <div className="block rounded-lg shadow-md overflow-hidden w-full max-w-[320px] mt-4 sm:mt-6 transition-transform hover:scale-105">
       <Link href={`/video/yt/${videoId}`} className="block h-full">
         {/* Thumbnail Container with Fixed Aspect Ratio */}
         <div className="relative aspect-video w-full">
@@ -32,16 +32,16 @@ const VideoCard = ({ title, thumbnail, channelName, duration, videoId, kudosCoun
 
         {/* Video Details */}
         <div className="p-3">
-          <h3 className="text-lg font-semibold line-clamp-2 mb-1">{title}</h3>
-          <div className='flex flex-row gap-4 pt-2'>
+          <h3 className="text-base sm:text-lg font-semibold line-clamp-2 mb-1">{title}</h3>
+          <div className='flex flex-row items-center gap-2 sm:gap-4 pt-2'>
             {/* Kudos count badge (if available) */}
             {kudosCount !== undefined && kudosCount >= 0 && (
-              <div className=" bg-black bg-opacity-70 text-white text-xs rounded-full flex items-center">
+              <div className="bg-black bg-opacity-70 text-white text-xs rounded-full flex items-center px-2 py-1">
                 <Image src="/icon.png" alt="kudos" width={16} height={16} className="mr-1" />
                 <span>{kudosCount}</span>
               </div>
             )}
-            <p className="text-gray-500 text-sm">Channel: {channelName}</p>
+            <p className="text-gray-500 text-xs sm:text-sm truncate">Channel: {channelName}</p>
           </div>
         </div>
       </Link>

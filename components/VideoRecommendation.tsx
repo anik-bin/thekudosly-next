@@ -12,7 +12,6 @@ import Loader from "./Loader";
 import VideoCard from "./VideoCard";
 import { useRouter } from "next/navigation";
 
-
 interface VideoDetails {
     videoId: string;
     title: string;
@@ -24,7 +23,6 @@ interface VideoDetails {
 }
 
 export default function VideoRecommendation() {
-
     const router = useRouter();
     const [url, setUrl] = useState("");
     const [videoDetails, setVideoDetails] = useState<VideoDetails | null>(null);
@@ -41,7 +39,7 @@ export default function VideoRecommendation() {
             const response = await axios.post("/api/preview", { videoUrl: url });
             const { videoId, title, thumbnail, channelName, duration, description } = response.data;
 
-            setVideoDetails({ videoId, title, thumbnail, channelName, videoUrl: url, duration, description});
+            setVideoDetails({ videoId, title, thumbnail, channelName, videoUrl: url, duration, description });
 
             toast.success("Preview created", {
                 description: "Check the video details below.",
@@ -93,20 +91,25 @@ export default function VideoRecommendation() {
     };
 
     return (
-        <div className="container mx-auto p-6 mt-8">
-            <label htmlFor="" className="text-sm text-slate-400">Video URL</label>
+        <div className="w-full p-4 sm:p-6">
+            <label htmlFor="video-url" className="text-sm text-slate-400">Video URL</label>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                <div className="flex items-center space-x-2 mt-2">
+                <div className="flex flex-col sm:flex-row gap-3 sm:items-center mt-2">
                     <Input
+                        id="video-url"
                         type="text"
                         placeholder="Enter YouTube video URL"
                         {...form.register("youtubeVideoLink")}
                         value={url}
                         onChange={(e) => setUrl(e.target.value)}
-                        className="w-1/2"
+                        className="w-full sm:w-2/3"
                         disabled={loading}
                     />
-                    <Button onClick={handlePreview} disabled={loading} className="w-40 bg-white text-black hover:bg-slate-100">
+                    <Button
+                        onClick={handlePreview}
+                        disabled={loading}
+                        className="w-full sm:w-auto bg-white text-black hover:bg-slate-100"
+                    >
                         {loading ? "Loading..." : "Preview"}
                     </Button>
                 </div>
@@ -114,8 +117,8 @@ export default function VideoRecommendation() {
                 {loading && <Loader />}
 
                 {videoDetails && (
-                    <>
-                        <div className="mt-4 flex justify-start">
+                    <div className="space-y-4">
+                        <div className="flex justify-center sm:justify-start">
                             <VideoCard
                                 thumbnail={videoDetails.thumbnail}
                                 title={videoDetails.title}
@@ -125,13 +128,13 @@ export default function VideoRecommendation() {
                             />
                         </div>
                         <Button
-                            className="w-1/2 rounded-sm p-6 bg-white text-black hover:bg-slate-100 mt-4"
+                            className="w-full sm:w-auto rounded-sm p-4 sm:p-6 bg-white text-black hover:bg-slate-100"
                             type="submit"
                             disabled={loading}
                         >
                             {loading ? "Recommending..." : "Recommend Video and Give Kudos"}
                         </Button>
-                    </>
+                    </div>
                 )}
             </form>
         </div>

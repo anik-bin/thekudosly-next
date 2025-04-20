@@ -1,3 +1,4 @@
+// app/(app)/(homepage)/page.tsx
 "use client";
 
 import { useEffect, useState } from "react";
@@ -56,31 +57,30 @@ export default function HomePage() {
       <Navbar />
 
       {/* Sidebar + Main Content */}
-      <div className="grid grid-cols-[250px,1fr] h-full">
+      <div className="flex h-full overflow-hidden">
         {/* Sidebar */}
         <Sidebar activePage="trending" />
 
         {/* Main Content */}
-        <main className="p-6 overflow-y-auto">
-          <h1 className="text-3xl font-bold mb-6">
+        <main className="flex-1 p-4 sm:p-6 overflow-y-auto">
+          <h1 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">
             Trending Videos {totalVideos > 0 && `(${totalVideos})`}
           </h1>
 
           {loading ? (
             <Loader />
           ) : videos.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 justify-items-center">
               {videos.map((video) => (
-                <div key={video._id} className="flex justify-center">
-                  <VideoCard
-                    title={video.title}
-                    thumbnail={video.thumbnail}
-                    channelName={video.channelName}
-                    duration={video.duration}
-                    videoId={video.videoId}
-                    kudosCount={video.kudosCount}
-                  />
-                </div>
+                <VideoCard
+                  key={video._id}
+                  title={video.title}
+                  thumbnail={video.thumbnail}
+                  channelName={video.channelName}
+                  duration={video.duration}
+                  videoId={video.videoId}
+                  kudosCount={video.kudosCount}
+                />
               ))}
             </div>
           ) : (

@@ -6,7 +6,6 @@ import { useSession } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import {
     AlertDialog,
-    AlertDialogAction,
     AlertDialogCancel,
     AlertDialogContent,
     AlertDialogDescription,
@@ -18,15 +17,13 @@ import {
 
 
 export default function Navbar() {
-
     const { data: session, status } = useSession();
 
     return (
         <nav className="w-full flex items-center justify-between px-6 py-4 bg-black shadow-md text-white">
             {/* Left Section: Logo */}
             <Link href="/" className="text-xl font-bold">
-                <Image src="/logo.png" alt="logo" width={250} height={10}/>
-                {/* myLogo */}
+                <Image src="/logo.png" alt="logo" width={250} height={10} />
             </Link>
 
             <AlertDialog>
@@ -39,22 +36,21 @@ export default function Navbar() {
                         </AlertDialogDescription>
                         <AlertDialogTitle>What is kudos?</AlertDialogTitle>
                         <AlertDialogDescription className="text-gray-400">Imagine having a way to genuinely appreciate great videos? That's where our Kudos system comes in.
-                        <br />
-                        <br />
-                        Every day, you receive 3 Kudos. Think of them as special tokens of appreciation. When you find a video that truly impresses you, you can give it a Kudos, helping great content rise to the top.</AlertDialogDescription>
+                            <br />
+                            <br />
+                            Every day, you receive 3 Kudos. Think of them as special tokens of appreciation. When you find a video that truly impresses you, you can give it a Kudos, helping great content rise to the top.</AlertDialogDescription>
                         <AlertDialogTitle>What is recommend?</AlertDialogTitle>
                         <AlertDialogDescription className="text-gray-400">Got a video that blew your mind? Share it with the community!
-                        <br />
-                        <br />
-                        One kudos at a time
+                            <br />
+                            <br />
+                            One kudos at a time
                         </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
-                        <AlertDialogCancel>Lets go back to website</AlertDialogCancel>
+                        <AlertDialogCancel>Let's go back to website</AlertDialogCancel>
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>
-
 
             {/* Right Section: Auth Buttons or Profile */}
             <div>
@@ -70,7 +66,7 @@ export default function Navbar() {
                                 <Image src="/icon.png" alt="icon" width={32} height={32} />
                                 <h1 className="text-2xl">{session.user.kudos}</h1>
                             </div>
-                            
+
                         </div>
                     </Link>
                 ) : (
@@ -84,4 +80,3 @@ export default function Navbar() {
         </nav>
     );
 }
-

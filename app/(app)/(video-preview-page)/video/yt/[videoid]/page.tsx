@@ -10,6 +10,7 @@ import Loader from '@/components/Loader';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import VideoDescription from '@/components/VideoDescription';
+import Link from 'next/link';
 
 interface VideoData {
     _id: string;
@@ -28,7 +29,7 @@ interface VideoData {
 const VideoPreviewPage = () => {
     const params = useParams();
     const router = useRouter();
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
     const [loading, setLoading] = useState(true);
     const [videoData, setvideoData] = useState<VideoData | null>(null);
     const [hasGivenKudos, setHasGivenKudos] = useState(false);
@@ -37,13 +38,15 @@ const VideoPreviewPage = () => {
     const videoId = params?.videoid as string;
 
     useEffect(() => {
-        if (!session || !session.user) return;
-
         const fetchVideoData = async () => {
             try {
                 const response = await axios.get(`/api/video/${videoId}`);
                 setvideoData(response.data.video);
-                setHasGivenKudos(response.data.hasGivenKudos);
+
+                // Only set hasGivenKudos if user is logged in
+                if (session?.user) {
+                    setHasGivenKudos(response.data.hasGivenKudos);
+                }
             } catch (error) {
                 const axiosError = error as AxiosError<ApiResponse>;
                 const errorMessage = axiosError.response?.data.message;
@@ -52,9 +55,7 @@ const VideoPreviewPage = () => {
                     description: errorMessage || "Could not fetch video data",
                 });
 
-
-                // redirect to dashboard
-
+                // redirect to home
                 if (axiosError.response?.status === 404) {
                     router.push("/");
                 }
@@ -67,7 +68,13 @@ const VideoPreviewPage = () => {
     }, [session, videoId, router]);
 
     const handleGiveKudos = async () => {
-        if (hasGivenKudos || !session?.user || !videoData) return;
+        if (!session?.user) {
+            // Redirect to login if not logged in
+            router.push('/login');
+            return;
+        }
+
+        if (hasGivenKudos || !videoData) return;
 
         setGivingKudos(true);
 
@@ -118,7 +125,7 @@ const VideoPreviewPage = () => {
     return (
         <div>
             <NavbarPreview />
-            <div className="container mx-auto mt-8 p-4 px-40">
+            <div className="container mx-auto mt-8 p-4 px-4 md:px-40">
                 {/* Video Player */}
                 <div className="max-w-4xl mx-auto mb-10">
                     <div className="aspect-w-16 aspect-h-9">
@@ -132,7 +139,6 @@ const VideoPreviewPage = () => {
                     </div>
 
                     {/* Video Title */}
-
                     <h1 className="text-3xl font-bold mt-10 mb-2">{videoData.title}</h1>
 
                     {/* Channel Name */}
@@ -146,18 +152,26 @@ const VideoPreviewPage = () => {
                             <span className="text-xl mr-2"><Image src="/icon.png" alt="icon" width={32} height={32} /></span>
                             <span className="text-2xl font-semibold">{videoData.kudosCount}</span>
                         </div>
-                        <Button
-                            onClick={handleGiveKudos}
-                            disabled={hasGivenKudos || givingKudos || session?.user.kudos === 0}
-                            className="bg-white text-black hover:bg-gray-100 disabled:cursor-not-allowed"
-                        >
-                            {givingKudos ? "Processing..." : hasGivenKudos ? "Kudos Given 🔒" : "Give Kudos"}
-                        </Button>
+                        {status === "authenticated" ? (
+                            <Button
+                                onClick={handleGiveKudos}
+                                disabled={hasGivenKudos || givingKudos || session?.user.kudos === 0}
+                                className="bg-white text-black hover:bg-gray-100 disabled:cursor-not-allowed"
+                            >
+                                {givingKudos ? "Processing..." : hasGivenKudos ? "Kudos Given 🔒" : "Give Kudos"}
+                            </Button>
+                        ) : (
+                            <Link href="/login">
+                                <Button className="bg-white text-black hover:bg-gray-100">
+                                    Login to Give Kudos
+                                </Button>
+                            </Link>
+                        )}
                     </div>
 
                     {/* Recommended By */}
                     <p className="text-sm text-gray-500 mb-6">
-                        Recommended by: @{videoData.submittedBy.username}
+                        Recommended by: <Link href={`/profile/${videoData.submittedBy.username}`} className="hover:underline">@{videoData.submittedBy.username}</Link>
                     </p>
 
                     {/* Video Description */}
@@ -165,7 +179,7 @@ const VideoPreviewPage = () => {
                         <h2 className="text-2xl font-semibold mb-2">Description</h2>
                         <VideoDescription description={videoData.description} />
                     </div>
-                </div> 
+                </div>
             </div>
         </div>
     );

@@ -1,35 +1,47 @@
 import { NextRequest, NextResponse } from 'next/server';
-export { default } from "next-auth/middleware";
 import { getToken } from 'next-auth/jwt';
 
+export async function middleware(req: NextRequest) {
+    const token = await getToken({ req: req });
+    const url = req.nextUrl;
 
-export async function middleware(request: NextRequest) {
-    const token = await getToken({ req: request });
-    const url = request.nextUrl;
-
-    if (!token && url.pathname.startsWith("/dashboard")) {
-        return NextResponse.redirect(new URL('/login', request.url));
+    // Allow public access to the root route "/"
+    if (url.pathname === "/" && !token) {
+        return NextResponse.next();
     }
 
-    if(token) {
-        const hasUsername =  token.username ? true : false;
+    // Handle login page
+    if (url.pathname === "/login") {
+        if (token) {
+            const hasUsername = token.username ? true : false;
 
-        if (hasUsername && (url.pathname === "/login" || url.pathname === "/")) {
-            return NextResponse.redirect(new URL("/dashboard", request.url));
+            if (hasUsername) {
+                return NextResponse.redirect(new URL("/", req.url));
+            }
+        }
+        return NextResponse.next();
+    }
+
+    // Protected routes
+    if (url.pathname.startsWith("/recommend") || url.pathname.startsWith("/contact")) {
+        if (!token) {
+            return NextResponse.redirect(new URL('/login', req.url));
         }
 
-        if (!hasUsername && url.pathname.startsWith("/dashboard")) {
-            return NextResponse.redirect(new URL("/login", request.url));
+        const hasUsername = token.username ? true : false;
+        if (!hasUsername) {
+            return NextResponse.redirect(new URL('/login', req.url));
+        }
     }
 
     return NextResponse.next();
 }
-}
 
 export const config = {
     matcher: [
-        '/login',
         '/',
-        '/dashboard/:path*',
+        '/login',
+        '/recommend/:path*',
+        '/contact/:path*',
     ]
 };

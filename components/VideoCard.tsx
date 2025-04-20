@@ -8,9 +8,10 @@ interface VideoCardProps {
   channelName: string;
   duration: string;
   videoId: string;
+  kudosCount?: number;
 }
 
-const VideoCard = ({ title, thumbnail, channelName, duration, videoId }: VideoCardProps) => {
+const VideoCard = ({ title, thumbnail, channelName, duration, videoId, kudosCount }: VideoCardProps) => {
   return (
     <div className="block rounded-lg shadow-md overflow-hidden w-80 mt-6 transition-transform hover:scale-105">
       <Link href={`/video/yt/${videoId}`} className="block h-full">
@@ -32,7 +33,16 @@ const VideoCard = ({ title, thumbnail, channelName, duration, videoId }: VideoCa
         {/* Video Details */}
         <div className="p-3">
           <h3 className="text-lg font-semibold line-clamp-2 mb-1">{title}</h3>
-          <p className="text-gray-500 text-sm">Channel: {channelName}</p>
+          <div className='flex flex-row gap-4 pt-2'>
+            {/* Kudos count badge (if available) */}
+            {kudosCount !== undefined && kudosCount >= 0 && (
+              <div className=" bg-black bg-opacity-70 text-white text-xs rounded-full flex items-center">
+                <Image src="/icon.png" alt="kudos" width={16} height={16} className="mr-1" />
+                <span>{kudosCount}</span>
+              </div>
+            )}
+            <p className="text-gray-500 text-sm">Channel: {channelName}</p>
+          </div>
         </div>
       </Link>
     </div>

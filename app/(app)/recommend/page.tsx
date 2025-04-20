@@ -13,7 +13,7 @@ export default function Recommend() {
                 {/* Sidebar + Main Content */}
                 <div className="grid grid-cols-[250px,1fr] h-full">
                     {/* Sidebar */}
-                    <Sidebar />
+                    <Sidebar activePage="recommend" />
 
                     {/* Main Content */}
                     <main className="flex justify-center h-full">
@@ -38,7 +38,7 @@ export default function Recommend() {
                                 </div>
                             </div>
                         </div>
-                        
+
                     </main>
                 </div>
             </div>

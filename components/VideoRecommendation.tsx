@@ -57,7 +57,7 @@ export default function VideoRecommendation() {
     };
 
     // Handle video recommendation
-    const onSubmit = async (data: z.infer<typeof youtubeVideoLinkVerificationSchema>) => {
+    const onSubmit = async () => {
         setLoading(true);
         try {
             const response = await axios.post<ApiResponse>("/api/recommend", {

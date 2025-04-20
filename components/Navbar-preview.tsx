@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 export default function NavbarPreview() {
-    const { data: session, status } = useSession();
+    const { data: session} = useSession();
 
     return (
         <nav className="w-full flex items-center justify-between px-4 sm:px-6 py-4 bg-black shadow-md text-white">

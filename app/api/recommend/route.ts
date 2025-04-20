@@ -87,6 +87,7 @@ export async function POST(req: NextRequest) {
                 status: 201
             }
         )
+    /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (error: any) {
         console.log("Recommend video error:", error);
         return NextResponse.json({

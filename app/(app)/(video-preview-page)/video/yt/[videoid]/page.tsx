@@ -79,7 +79,7 @@ const VideoPreviewPage = () => {
         setGivingKudos(true);
 
         try {
-            const response = await axios.post(`/api/${videoId}/appreciate`);
+            await axios.post(`/api/${videoId}/appreciate`);
 
             setHasGivenKudos(true);
             setvideoData((prev) =>

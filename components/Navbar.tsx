@@ -17,7 +17,7 @@ import {
 
 
 export default function Navbar() {
-    const { data: session, status } = useSession();
+    const { data: session} = useSession();
 
     return (
         <nav className="w-full flex flex-wrap items-center justify-between px-4 sm:px-6 py-4 bg-black shadow-md text-white">
@@ -36,10 +36,10 @@ export default function Navbar() {
                         <AlertDialogHeader>
                             <AlertDialogTitle>What is thekudosly?</AlertDialogTitle>
                             <AlertDialogDescription className="text-gray-400">
-                                thekudosly is a platform to discover and share the internet's interesting and valuable videos
+                                thekudosly is a platform to discover and share the internet&apos;s interesting and valuable videos
                             </AlertDialogDescription>
                             <AlertDialogTitle>What is kudos?</AlertDialogTitle>
-                            <AlertDialogDescription className="text-gray-400">Imagine having a way to genuinely appreciate great videos? That's where our Kudos system comes in.
+                            <AlertDialogDescription className="text-gray-400">Imagine having a way to genuinely appreciate great videos? That&apos;s where our Kudos system comes in.
                                 <br />
                                 <br />
                                 Every day, you receive 3 Kudos. Think of them as special tokens of appreciation. When you find a video that truly impresses you, you can give it a Kudos, helping great content rise to the top.</AlertDialogDescription>
@@ -51,7 +51,7 @@ export default function Navbar() {
                             </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
-                            <AlertDialogCancel>Let's go back to website</AlertDialogCancel>
+                            <AlertDialogCancel>Let&apos;s go back to website</AlertDialogCancel>
                         </AlertDialogFooter>
                     </AlertDialogContent>
                 </AlertDialog>

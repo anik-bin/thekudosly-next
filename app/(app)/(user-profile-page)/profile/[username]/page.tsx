@@ -10,7 +10,7 @@ import axios from "axios";
 import { Pencil, Save, X } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 interface UserProfile {
@@ -35,7 +35,7 @@ interface Video {
 
 export default function ProfilePage() {
     const { username } = useParams();
-    const { data: session, update } = useSession();
+    const { data: session} = useSession();
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(true);
     const [profileData, setProfileData] = useState<UserProfile | null>(null);
@@ -47,11 +47,7 @@ export default function ProfilePage() {
 
     const isOwnProfile = session?.user?.username === username;
 
-    useEffect(() => {
-        fetchProfileData();
-    }, [session, username]);
-
-    const fetchProfileData = async () => {
+    const fetchProfileData = useCallback(async () => {
         setIsLoading(true);
 
         try {
@@ -75,7 +71,11 @@ export default function ProfilePage() {
         } finally {
             setIsLoading(false);
         }
-    };
+    }, [username]);
+
+    useEffect(() => {
+        fetchProfileData();
+    }, [session, username, fetchProfileData]);
 
     const handleSaveAbout = async () => {
         if (!isOwnProfile) return;
@@ -269,7 +269,7 @@ export default function ProfilePage() {
                     <Card>
                         <CardContent className="flex flex-col items-center justify-center p-10">
                             <h2 className="text-2xl font-bold">Profile Not Found</h2>
-                            <p className="text-gray-400 mt-2">This user profile doesn't exist or is unavailable.</p>
+                            <p className="text-gray-400 mt-2">This user profile doesn&apos;t exist or is unavailable.</p>
                             <Button className="mt-4" onClick={() => router.push("/dashboard")}>
                                 Go to Dashboard
                             </Button>

@@ -5,7 +5,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-const login = () => {
+const Login = () => {
 
     const router = useRouter();
     const { data: session, status, update } = useSession();
@@ -19,6 +19,7 @@ const login = () => {
     // }, [session, router])
 
 
+    /* eslint-disable @typescript-eslint/no-explicit-any */
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         setLoading(true);
@@ -34,7 +35,7 @@ const login = () => {
                 router.replace("/");
             }
 
-
+        /* eslint-disable @typescript-eslint/no-explicit-any */
         } catch (error: any) {
             console.error(error);
             alert(error.response?.data?.message || "Failed to set the username")
@@ -90,4 +91,4 @@ const login = () => {
     )
 }
 
-export default login
+export default Login

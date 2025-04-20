@@ -1,5 +1,5 @@
 // components/Sidebar.tsx
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Button } from './ui/button';
 import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/react';
@@ -16,15 +16,21 @@ const Sidebar = ({ activePage = "" }: SidebarProps) => {
 
     const KUDOS_REFRESH_INTERVAL = 24 * 60 * 60 * 1000;
 
-    const calculateTimeUntilNextRefresh = (lastKudosRefresh: number | null): number => {
-        if (!lastKudosRefresh) {
-            return 0;
-        }
-        const nextRefreshTime = lastKudosRefresh + KUDOS_REFRESH_INTERVAL;
-        const timeUntilNextRefresh = nextRefreshTime - Date.now();
+    
+    
 
-        return Math.max(0, timeUntilNextRefresh);
-    }
+    const calculateTimeUntilNextRefresh = useCallback(
+        (lastKudosRefresh: number | null): number => {
+            if (!lastKudosRefresh) {
+                return 0;
+            }
+            const nextRefreshTime = lastKudosRefresh + KUDOS_REFRESH_INTERVAL;
+            const timeUntilNextRefresh = nextRefreshTime - Date.now();
+
+            return Math.max(0, timeUntilNextRefresh);
+        },
+        [],
+    )
 
     const formatTime = (milliseconds: number): { hours: number; minutes: number; seconds: number } => {
         const totalSeconds = Math.floor(milliseconds / 1000);
@@ -44,7 +50,7 @@ const Sidebar = ({ activePage = "" }: SidebarProps) => {
 
             return () => clearInterval(intervalId);
         }
-    }, [session?.user?.lastKudosRefresh]);
+    }, [session?.user?.lastKudosRefresh, calculateTimeUntilNextRefresh]);
 
     const getLinkClassName = (page: string) => {
         return `flex gap-2 p-2 rounded-lg shadow ${activePage === page

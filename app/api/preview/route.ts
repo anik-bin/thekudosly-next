@@ -91,6 +91,7 @@ export async function POST(req: NextRequest) {
         }, {
             status: 200
         })
+    /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (error: any) {
         console.log("Preview video error:", error);
         return NextResponse.json({

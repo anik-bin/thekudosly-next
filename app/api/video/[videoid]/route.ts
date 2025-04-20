@@ -49,6 +49,7 @@ export async function GET(req: NextRequest, props: { params: Promise<{ videoid: 
         }, {
             status: 200
         });
+    /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (error: any) {
         console.error("Fetch video error: ", error);
         return NextResponse.json({

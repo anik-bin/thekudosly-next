@@ -117,6 +117,7 @@ export async function POST(req: NextRequest, props: { params: Promise<{ videoid:
                 status: 200
             }
         )
+    /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (error: any) {
         return NextResponse.json({
             success: false,

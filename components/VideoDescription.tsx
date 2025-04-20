@@ -9,13 +9,6 @@ const VideoDescription = ({ description }: VideoDescriptionProps) => {
     const [showToggle, setShowToggle] = useState(false);
     const contentRef = useRef<HTMLParagraphElement>(null);
 
-    // If no description is provided
-    if (!description || description.trim() === '') {
-        return (
-            <p className="text-gray-400 italic">No description available for this video.</p>
-        );
-    }
-
     // Check if content height exceeds the limit
     useEffect(() => {
         if (contentRef.current) {
@@ -26,6 +19,13 @@ const VideoDescription = ({ description }: VideoDescriptionProps) => {
     const handleToggle = () => {
         setExpanded(!expanded);
     };
+
+    // If no description is provided
+    if (!description || description.trim() === '') {
+        return (
+            <p className="text-gray-400 italic">No description available for this video.</p>
+        );
+    }
 
     return (
         <div>

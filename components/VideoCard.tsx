@@ -17,7 +17,6 @@ const VideoCard = ({ title, thumbnail, channelName, duration, videoId, kudosCoun
       <Link href={`/video/yt/${videoId}`} className="block h-full">
         {/* Thumbnail Container with Fixed Aspect Ratio */}
         <div className="relative aspect-video w-full">
-          {/* Next.js Image for better optimization */}
           <img
             src={thumbnail}
             alt={title}

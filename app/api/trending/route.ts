@@ -1,8 +1,8 @@
 import connectToDatabase from "@/lib/db";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import VideoModel from "@/models/Video";
 
-export async function GET(req: NextRequest) {
+export async function GET() {
     await connectToDatabase();
     try {
         // Fetch trending videos sorted by kudos count and then creation date
@@ -19,6 +19,7 @@ export async function GET(req: NextRequest) {
             trendingVideos,
             totalCount
         });
+    /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (error: any) {
         return NextResponse.json({
             success: false,

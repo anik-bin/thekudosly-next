@@ -1,6 +1,6 @@
 import connectToDatabase from "@/lib/db";
 import { getServerSession } from "next-auth";
-import { NextRequest, NextResponse, userAgent } from "next/server";
+import { NextRequest, NextResponse} from "next/server";
 import { authOptions } from "../../auth/[...nextauth]/options";
 import UserModel from "@/models/User";
 
@@ -49,6 +49,7 @@ export async function POST(req: NextRequest) {
             success: true,
             message: "About section updated successfully",
         });
+    /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (error: any) {
         console.error("Update about section error:", error);
 

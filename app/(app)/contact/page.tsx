@@ -3,6 +3,7 @@
 import Sidebar from "@/components/Sidebar";
 import NavbarPreview from "@/components/Navbar-preview";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Contact() {
     return (
@@ -22,7 +23,7 @@ export default function Contact() {
                         <h2 className="text-sm sm:text-base">Email: me[@]aniketbindhani.com</h2>
                         <div className="flex flex-row gap-4">
                             <Link href="https://x.com/aniketbindhani" target="_blank" rel="noopener noreferrer">
-                                <img
+                                <Image
                                     width="30"
                                     height="30"
                                     src="https://img.icons8.com/ios-filled/50/twitterx--v2.png"
@@ -31,7 +32,7 @@ export default function Contact() {
                                 />
                             </Link>
                             <Link href="https://www.linkedin.com/in/aniket-bindhani/" target="_blank" rel="noopener noreferrer">
-                                <img
+                                <Image
                                     width="30"
                                     height="30"
                                     src="https://img.icons8.com/ios-filled/50/linkedin.png"

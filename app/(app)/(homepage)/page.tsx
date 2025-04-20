@@ -1,8 +1,6 @@
-// app/(app)/(homepage)/page.tsx
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
 import axios from "axios";
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";

@@ -25,6 +25,7 @@ export async function POST(req: NextRequest) {
         
         try {
             usernameVerificationSchema.parse({ username });
+        /* eslint-disable @typescript-eslint/no-explicit-any */
         } catch (validationError: any) {
             return NextResponse.json({
                 success: false,
@@ -50,6 +51,7 @@ export async function POST(req: NextRequest) {
             success: true,
             message: "Username set successfully"
         });
+    /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (error: any) {
         console.error("Set username error:", error);
         return NextResponse.json({

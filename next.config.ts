@@ -16,6 +16,12 @@ const nextConfig: NextConfig = {
           hostname: "i.ytimg.com",
           port: "",
           pathname: "**",
+        },
+        {
+          protocol: "https",
+          hostname: "img.icons8.com",
+          port: "",
+          pathname: "**",
         }
       ],
     },

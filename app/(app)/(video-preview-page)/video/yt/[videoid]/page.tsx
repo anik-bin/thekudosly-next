@@ -147,7 +147,7 @@ const VideoPreviewPage = () => {
                     </p>
 
                     {/* Kudos Section */}
-                    <div className="flex justify-between items-center mb-6 mt-6 bg-gray-800 p-4 rounded-lg">
+                    <div className="flex justify-between items-center mb-6 mt-6 bg-[#1B1B1A] p-4 rounded-lg">
                         <div className="flex items-center">
                             <span className="text-xl mr-2"><Image src="/icon.png" alt="icon" width={32} height={32} /></span>
                             <span className="text-2xl font-semibold">{videoData.kudosCount}</span>

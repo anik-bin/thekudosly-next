@@ -270,7 +270,7 @@ export default function ProfilePage() {
                         <CardContent className="flex flex-col items-center justify-center p-10">
                             <h2 className="text-2xl font-bold">Profile Not Found</h2>
                             <p className="text-gray-400 mt-2">This user profile doesn&apos;t exist or is unavailable.</p>
-                            <Button className="mt-4" onClick={() => router.push("/dashboard")}>
+                            <Button className="mt-4" onClick={() => router.push("/")}>
                                 Go to Dashboard
                             </Button>
                         </CardContent>

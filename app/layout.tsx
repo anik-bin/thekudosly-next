@@ -18,7 +18,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "thekudosly",
-  description: "Finding internets best videos",
+  description: "Finding the top videos so you dont have to",
 };
 
 export default function RootLayout({

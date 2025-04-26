@@ -22,11 +22,23 @@ export default function Navbar() {
     const [isAboutOpen, setIsAboutOpen] = useState(false);
 
     useEffect(() => {
-        const timer = setTimeout(() => {
-            setIsAboutOpen(true);
-        }, 500);
 
-        return () => clearTimeout(timer);
+        try {
+            const hasVisitedBefore = localStorage.getItem('hasVisitedBefore');
+
+            if (!hasVisitedBefore) {
+                const timer = setTimeout(() => {
+                    setIsAboutOpen(true);
+                    localStorage.setItem('hasVisitedBefore', 'true');
+                }, 500);
+
+                return () => clearTimeout(timer);
+            }
+        /* eslint-disable @typescript-eslint/no-unused-vars */
+        } catch (error) {
+            console.error("Local storage not available");
+        }
+
     }, [])
 
 

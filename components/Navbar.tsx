@@ -14,10 +14,21 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { useEffect, useState } from "react";
 
 
 export default function Navbar() {
-    const { data: session} = useSession();
+    const { data: session } = useSession();
+    const [isAboutOpen, setIsAboutOpen] = useState(false);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsAboutOpen(true);
+        }, 500);
+
+        return () => clearTimeout(timer);
+    }, [])
+
 
     return (
         <nav className="w-full flex flex-wrap items-center justify-between px-4 sm:px-6 py-4 bg-black shadow-md text-white">
@@ -28,7 +39,7 @@ export default function Navbar() {
 
             {/* Center Section: About Button - Order changes on mobile */}
             <div className="order-3 w-full md:w-auto md:order-2 mt-2 md:mt-0 md:mx-4">
-                <AlertDialog>
+                <AlertDialog open={isAboutOpen} onOpenChange={setIsAboutOpen}>
                     <AlertDialogTrigger className="w-full md:w-auto bg-[#1B1B1A] p-3 hover:bg-[#41413e] rounded-sm">
                         About
                     </AlertDialogTrigger>

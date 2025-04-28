@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Discover the internet's most valuable videos
 
-## Getting Started
+thekudosly is a platform designed to help people discover high-quality, informative YouTube videos that often get overlooked by traditional recommendation algorithms. Our community-driven approach ensures that truly valuable content rises to the top.
 
-First, run the development server:
+![thekudosly logo](/public/logo.png)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## About the Project
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+YouTube's vast library contains countless educational and informative videos that deserve more attention. However, many of these videos remain hidden due to recommendation algorithms that prioritize engagement metrics over actual value.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+thekudosly solves this problem by empowering users to:
+- **Recommend valuable videos** they've discovered
+- **Give kudos** to videos they find valuable
+- **Discover content** recommended by a community of like-minded individuals
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Key Features
 
-## Learn More
+### Kudos System
+Every day, users receive 3 kudos they can award to videos they appreciate. This token of recognition helps highlight quality content and rewards users who contribute valuable recommendations.
 
-To learn more about Next.js, take a look at the following resources:
+### Video Recommendations
+Users can easily share YouTube videos they find valuable with the community. Each recommendation requires one kudos, ensuring users are thoughtful about what they share.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### User Profiles
+Build your reputation as a curator of quality content. Your profile showcases the videos you've recommended and appreciated, allowing others to discover content through curators they trust.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Coming Soon
 
-## Deploy on Vercel
+We're continuously working to improve thekudosly. Some features on our roadmap include:
+- Comment system for videos
+- Enhanced spam prevention
+- Improved video recommendation algorithms
+- And more!
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Built With
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Next.js
+- MongoDB
+- Tailwind CSS
+- NextAuth.js
+
+## Join the Community
+
+Help us build a better way to discover the internet's most valuable videos. Sign up today and start sharing the content that matters.
+
+---

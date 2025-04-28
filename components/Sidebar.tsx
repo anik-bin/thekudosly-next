@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Button } from './ui/button';
 import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/react';
-import { Menu, X } from 'lucide-react'; // Import icons for mobile toggle
+import { Menu, X } from 'lucide-react';
 
 interface SidebarProps {
     activePage?: string;
@@ -12,7 +12,7 @@ interface SidebarProps {
 const Sidebar = ({ activePage = "" }: SidebarProps) => {
     const { data: session } = useSession();
     const [timeRemaining, setTimeRemaining] = useState({ hours: 0, minutes: 0, seconds: 0 });
-    const [isOpen, setIsOpen] = useState(false); // State to track sidebar visibility on mobile
+    const [isOpen, setIsOpen] = useState(false);
 
     const KUDOS_REFRESH_INTERVAL = 24 * 60 * 60 * 1000;
 

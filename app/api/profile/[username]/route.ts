@@ -1,7 +1,5 @@
 import connectToDatabase from "@/lib/db";
-import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
-import { authOptions } from "../../auth/[...nextauth]/options";
 import UserModel from "@/models/User";
 import VideoModel from "@/models/Video";
 
@@ -12,21 +10,7 @@ export async function GET(req: NextRequest, props: { params: Promise<{ username:
 
     const username = params.username;
 
-    // check for authentication
-
-    const session = await getServerSession(authOptions);
-
-    if (!session?.user) {
-        return NextResponse.json({
-            success: false,
-            message: "Not authenticated",
-        }, {
-            status: 401
-        });
-    }
-
     // find requested profile by username
-
     const userProfile = await UserModel.findOne({username}).lean();
 
     if(!userProfile) {
@@ -39,13 +23,11 @@ export async function GET(req: NextRequest, props: { params: Promise<{ username:
     }
 
     // find videos recommended by the user
-
     const recommendedVideos = await VideoModel.find({
         submittedBy: userProfile._id
     }).lean();
 
     // find videos appreciated by the user
-
     const appreciatedVideos = await VideoModel.find({
         appreciatedBy: userProfile._id
     }).lean();
@@ -56,7 +38,6 @@ export async function GET(req: NextRequest, props: { params: Promise<{ username:
 
     return NextResponse.json({
         success: true,
-
         profile: {
             _id: userProfile._id.toString(),
             username: userProfile.username,

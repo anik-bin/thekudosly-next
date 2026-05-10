@@ -18,8 +18,15 @@ import { useEffect, useState } from "react";
 
 
 export default function Navbar() {
-    const { data: session } = useSession();
+    const { data: session, update } = useSession();
     const [isAboutOpen, setIsAboutOpen] = useState(false);
+
+    useEffect(() => {
+        if (session?.user) {
+            update();
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
 

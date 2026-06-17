@@ -75,7 +75,7 @@ export default function ProfilePage() {
 
     useEffect(() => {
         fetchProfileData();
-    }, [session, username, fetchProfileData]);
+    }, [username, fetchProfileData]);
 
     const handleSaveAbout = async () => {
         if (!isOwnProfile) return;

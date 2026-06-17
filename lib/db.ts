@@ -8,21 +8,15 @@ const connection: ConnectionObject = {}
 
 async function connectToDatabase(): Promise<void> {
     if (connection.isConnected) {
-        // console.log("Database is already connected");
         return;
     }
 
-    try {
-        const db = await mongoose.connect(process.env.MONGODB_URL || "", {})
+    const db = await mongoose.connect(process.env.MONGODB_URL || "", {
+        serverSelectionTimeoutMS: 5000,
+        maxPoolSize: 10,
+    });
 
-        connection.isConnected = db.connections[0].readyState
-
-        // console.log("DB connected successfully");
-
-    } catch (error) {
-        console.log("DB connection failed", error);
-        process.exit(1);
-    }
+    connection.isConnected = db.connections[0].readyState;
 }
 
 export default connectToDatabase;
